@@ -18,7 +18,7 @@ mngr.window.wm_geometry("+120+110")
 # 设置显示的柱状图的个数
 bin_nums = 24
 # 设置显示的频率范围：(0 ~ frequency_threshold Hz)
-frequency_threshold = 2700
+frequency_threshold = 1350
 
 # 音乐时长(s)
 music_length = 0.0
@@ -44,7 +44,7 @@ def init():
     ax.set_xlim(0, bin_nums + 1)
     ax.set_ylim(0, y_max)
     ax.set_yticks(())
-    ax.set_xlabel("frequency ( * " + str(frequency_threshold / (bin_nums * 2)) + " Hz)")
+    ax.set_xlabel("frequency ( * " + str(frequency_threshold / bin_nums) + " Hz)")
     ax.set_title("Simple Music Visualizer")
     return rects
 
@@ -100,7 +100,7 @@ def getBin(y,sr,sampling_interval):
     # 原本使得 nums = bin_nums即可，这样所显示的频率将是0 ~ 22.1kHz
     # 但是对一般音乐来说 10 ～ 22.1kHz内的能量是非常低的，反应在柱状图上就是右边大半部分都很低
     # 所以这里我将frequency_threshold设为2.7kHz
-    nums = (sr * bin_nums) // frequency_threshold
+    nums = (sr * bin_nums) // (frequency_threshold * 2)
 
     batch = length // nums
 
